@@ -9,12 +9,12 @@ public:
     Engine();
     RNG rng;
 
-    void setEffect(std::unique_ptr<Effect> effect);
+    void setEffect(std::shared_ptr<Effect> effect);
     void run();
 
 private:
-    std::unique_ptr<Effect> currentEffect;
-    std::vector<std::unique_ptr<Effect>> allEffects;
+    std::shared_ptr<Effect> currentEffect;
+    std::vector<std::shared_ptr<Effect>> allEffects;
     Vector2 startingMousePos;
     float startupTimer = 0.0f;
 

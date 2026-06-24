@@ -5,13 +5,13 @@
 
 Engine::Engine() {
     rng = RNG();
-    allEffects.push_back(std::make_unique<DVDScreensaver>());
+    allEffects.push_back(std::make_shared<DVDScreensaver>());
     int randomEffectIndex = rng.intRange(0, allEffects.size() - 1);
-    setEffect(std::move(allEffects[randomEffectIndex]));
+    setEffect(allEffects[randomEffectIndex]);
 }
 
-void Engine::setEffect(std::unique_ptr<Effect> effect) {
-    this->currentEffect = std::move(effect);
+void Engine::setEffect(std::shared_ptr<Effect> effect) {
+    this->currentEffect = effect;
     startingMousePos = GetMousePosition();
     currentEffect->init(rng);
 }
