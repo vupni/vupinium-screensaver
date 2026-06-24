@@ -1,17 +1,25 @@
 #include "./DVDScreensaver.h"
 #include <cstdlib>
 
-void DVDScreensaver::init() {
-    pos = { 200, 200 };
-    vel = { 300, 200 };
+void DVDScreensaver::init(RNG& externalRng) {
+    rng = externalRng;
+    float angle = rng.floatRange(0.0f, 2 * PI);
+    angle = ((int)(angle) % 90 < 10) ? angle + 10 : angle;
+    float velX = rng.floatRange(250.0f, 330.0f) * cos(angle);
+    float velY = rng.floatRange(180.0f, 220.0f) * sin(angle);
+    vel = { velX, velY };
     color = RED;
     scale = 0.18f;
-    shouldDrawLogo = false;
+    shouldDrawLogo = rng.intRange(0, 3);
 
     logo = LoadTexture("assets/dvd-logo.png");
 
     logoWidth = shouldDrawLogo ? logo.width * scale : 150;
     logoHeight = shouldDrawLogo ? logo.height * scale : 80;
+
+    float centerX = (GetScreenWidth() - logoWidth) / 2;
+    float centerY = (GetScreenHeight() - logoHeight) / 2;
+    pos = { centerX, centerY };
 }
 
 void DVDScreensaver::update(float deltaTime) {
@@ -32,9 +40,9 @@ void DVDScreensaver::update(float deltaTime) {
 
     if (bounced) {
         color = {
-            (unsigned char)(rand() % 255),
-            (unsigned char)(rand() % 255),
-            (unsigned char)(rand() % 255),
+            (unsigned char)(rng.intRange(0, 255)),
+            (unsigned char)(rng.intRange(0, 255)),
+            (unsigned char)(rng.intRange(0, 255)),
             255
         };
     }

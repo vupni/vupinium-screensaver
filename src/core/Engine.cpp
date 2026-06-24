@@ -3,9 +3,10 @@
 #include <raymath.h>
 
 void Engine::setEffect(Effect* effect) {
+    rng = RNG();
     current = effect;
     startingMousePos = GetMousePosition();
-    current->init();
+    current->init(rng);
 }
 
 void Engine::run() {

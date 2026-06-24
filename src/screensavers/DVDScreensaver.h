@@ -3,7 +3,7 @@
 
 class DVDScreensaver : public Effect {
 public:
-    void init() override;
+    void init(RNG& externalRng) override;
     void update(float deltaTime) override;
     void draw() override;
 
@@ -16,4 +16,5 @@ private:
     bool shouldDrawLogo;
     double logoWidth;
     double logoHeight;
+    RNG rng;
 };
