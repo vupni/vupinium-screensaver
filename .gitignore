@@ -1,0 +1,12 @@
+# git
+.git/
+
+# build output
+builds/
+
+# IDEs
+.vscode/
+.idea/
+
+# system
+.DS_Store
