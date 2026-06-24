@@ -1,12 +1,19 @@
 #include "./Engine.h"
 #include "raylib.h"
+#include "../screensavers/DVDScreensaver.h"
 #include <raymath.h>
 
-void Engine::setEffect(Effect* effect) {
+Engine::Engine() {
     rng = RNG();
-    current = effect;
+    allEffects.push_back(std::make_unique<DVDScreensaver>());
+    int randomEffectIndex = rng.intRange(0, allEffects.size() - 1);
+    setEffect(std::move(allEffects[randomEffectIndex]));
+}
+
+void Engine::setEffect(std::unique_ptr<Effect> effect) {
+    this->currentEffect = std::move(effect);
     startingMousePos = GetMousePosition();
-    current->init(rng);
+    currentEffect->init(rng);
 }
 
 void Engine::run() {
@@ -15,11 +22,11 @@ void Engine::run() {
     while (!WindowShouldClose() && !windowShouldClose()) {
         float deltaTime = GetFrameTime();
 
-        current->update(deltaTime);
+        currentEffect->update(deltaTime);
 
         BeginDrawing();
         ClearBackground(BLACK);
-        current->draw();
+        currentEffect->draw();
         EndDrawing();
     }
 }
