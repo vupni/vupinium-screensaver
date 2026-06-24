@@ -17,8 +17,10 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(raylib)
 
-add_executable(screensaver
-    src/main.cpp
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
+    src/*.cpp
 )
+
+add_executable(screensaver ${SOURCES})
 
 target_link_libraries(screensaver raylib)
