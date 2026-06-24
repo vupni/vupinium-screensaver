@@ -1,13 +1,19 @@
 #include "./DVDScreensaver.h"
 #include <cstdlib>
+#include <cmath>
 
-void DVDScreensaver::init(RNG& externalRng) {
+void DVDScreensaver::init(const RNG& externalRng) {
     rng = externalRng;
     float angle = rng.floatRange(0.0f, 2 * PI);
-    bool isAngleNotSteep = ((int)(angle + 10) % 90 < 20);
-    angle = isAngleNotSteep ? angle + 10 : angle;
-    float velX = rng.floatRange(250.0f, 330.0f) * cos(angle);
-    float velY = rng.floatRange(180.0f, 220.0f) * sin(angle);
+    float deg = angle * (180.0f / PI);
+    bool isAngleNotSteep = fmodf(deg, 90.0f + 10) < 20.0f;
+    if (isAngleNotSteep) {
+        deg += 20.0f;
+    }
+    if (deg >= 360.0f) deg = fmodf(deg, 360.0f);
+    angle = deg * (PI / 180.0f);
+    float velX = rng.floatRange(250.0f, 330.0f) * cosf(angle);
+    float velY = rng.floatRange(180.0f, 220.0f) * sinf(angle);
     vel = { velX, velY };
     color = RED;
     scale = 0.18f;
@@ -15,8 +21,8 @@ void DVDScreensaver::init(RNG& externalRng) {
 
     logo = LoadTexture("assets/dvd-logo.png");
 
-    logoWidth = shouldDrawLogo ? logo.width * scale : 150;
-    logoHeight = shouldDrawLogo ? logo.height * scale : 80;
+    logoWidth = shouldDrawLogo ? (int)(logo.width * scale) : 150;
+    logoHeight = shouldDrawLogo ? (int)(logo.height * scale) : 80;
 
     float centerX = (GetScreenWidth() - logoWidth) / 2;
     float centerY = (GetScreenHeight() - logoHeight) / 2;
@@ -68,5 +74,11 @@ void DVDScreensaver::draw() {
         int textY = (int)pos.y + (logoHeight - textHeight) / 2;
 
         DrawText(text, textX, textY, fontSize, BLACK);
+    }
+}
+
+DVDScreensaver::~DVDScreensaver() {
+    if (logo.id != 0) {
+        UnloadTexture(logo);
     }
 }
