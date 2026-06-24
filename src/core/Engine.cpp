@@ -3,18 +3,16 @@
 #include <raymath.h>
 
 void Engine::setEffect(Effect* effect) {
+    rng = RNG();
     current = effect;
     startingMousePos = GetMousePosition();
-    current->init();
+    current->init(rng);
 }
 
 void Engine::run() {
     SetTargetFPS(60);
 
-    while (!WindowShouldClose()) {
-        if (windowShouldClose()) {
-            break;
-        }
+    while (!WindowShouldClose() && !windowShouldClose()) {
         float deltaTime = GetFrameTime();
 
         current->update(deltaTime);
@@ -30,7 +28,7 @@ bool Engine::windowShouldClose() {
     startupTimer += GetFrameTime();
     if (startupTimer < 1.0f)
     {
-        startingMousePos = GetMousePosition();;
+        startingMousePos = GetMousePosition();
         return false;
     }
     Vector2 currentMouse = GetMousePosition();

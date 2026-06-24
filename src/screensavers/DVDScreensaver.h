@@ -3,17 +3,19 @@
 
 class DVDScreensaver : public Effect {
 public:
-    void init() override;
+    void init(const RNG& externalRng) override;
     void update(float deltaTime) override;
     void draw() override;
+    ~DVDScreensaver() override;
 
 private:
     Vector2 pos;
     Vector2 vel;
-    Texture2D logo;
+    Texture2D logo{};
     Color color;
     float scale;
     bool shouldDrawLogo;
-    double logoWidth;
-    double logoHeight;
+    int logoWidth;
+    int logoHeight;
+    RNG rng;
 };
