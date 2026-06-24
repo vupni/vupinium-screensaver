@@ -4,7 +4,8 @@
 void DVDScreensaver::init(RNG& externalRng) {
     rng = externalRng;
     float angle = rng.floatRange(0.0f, 2 * PI);
-    angle = ((int)(angle) % 90 < 10) ? angle + 10 : angle;
+    bool isAngleNotSteep = ((int)(angle + 10) % 90 < 20);
+    angle = isAngleNotSteep ? angle + 10 : angle;
     float velX = rng.floatRange(250.0f, 330.0f) * cos(angle);
     float velY = rng.floatRange(180.0f, 220.0f) * sin(angle);
     vel = { velX, velY };
