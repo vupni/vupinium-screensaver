@@ -1,6 +1,5 @@
 #include "raylib.h"
 #include "./core/Engine.h"
-#include "./screensavers/DVDScreensaver.h"
 
 int main() {
     InitWindow(
@@ -12,10 +11,8 @@ int main() {
     ToggleFullscreen();
     HideCursor();
 
-    Engine engine;
-    DVDScreensaver dvd;
+    Engine engine = Engine();
 
-    engine.setEffect(&dvd);
     engine.run();
 
     CloseWindow();
