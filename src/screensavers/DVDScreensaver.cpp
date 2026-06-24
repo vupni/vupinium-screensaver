@@ -68,7 +68,7 @@ void DVDScreensaver::draw() {
         int fontSize = logoHeight / 2;
 
         int textWidth = MeasureText(text, fontSize);
-        int textHeight = fontSize; // raylib uses fontSize as height approximation
+        int textHeight = fontSize; 
 
         int textX = (int)pos.x + (logoWidth - textWidth) / 2;
         int textY = (int)pos.y + (logoHeight - textHeight) / 2;
