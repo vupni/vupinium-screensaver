@@ -1,5 +1,5 @@
 #pragma once
-#include "../core/Effect.h"
+#include "../../core/Effect.h"
 
 class DVDScreensaver : public Effect {
 public:
