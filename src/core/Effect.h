@@ -1,6 +1,6 @@
 #pragma once
 #include "raylib.h"
-#include "../utils/random/RNG.h"
+#include "../utils/RNG.h"
 
 class Effect {
 public:
