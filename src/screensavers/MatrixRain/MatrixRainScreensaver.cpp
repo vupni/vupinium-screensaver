@@ -2,6 +2,7 @@
 #include "../../utils/AssetsLoader.h"
 #include "../../utils/drawing/drawShadowText.h"
 #include <algorithm>
+#include <iostream>
 
 const float COLUMN_COUNT_DIVISOR = 1.6f;
 const float COLUMN_SPACING_RANDOMNESS = 0.3f;
@@ -129,6 +130,7 @@ void MatrixRainScreensaver::loadFont() {
     }
 
     if (!loadedFont) {
+        std::cout << "Failed to load custom font. Falling back to default font." << std::endl;
         font = GetFontDefault();
         usingCustomFont = false;
         useUnicodeGlyphs = false;
