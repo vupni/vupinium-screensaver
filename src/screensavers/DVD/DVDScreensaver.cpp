@@ -6,8 +6,8 @@ void DVDScreensaver::init(const RNG& externalRng) {
     rng = externalRng;
     float angle = rng.floatRange(0.0f, 2 * PI);
     float deg = angle * (180.0f / PI);
-    bool isAngleNotSteep = fmodf(deg, 90.0f + 10) < 20.0f;
-    if (isAngleNotSteep) {
+    bool isAngleNotSteep = fmodf(deg, 90.0f) < 20.0f;
+    while (fmodf(deg, 90.0f) < 20.0f || fmodf(deg, 90.0f) > 70.0f) {
         deg += 20.0f;
     }
     if (deg >= 360.0f) deg = fmodf(deg, 360.0f);
