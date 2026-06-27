@@ -1,6 +1,6 @@
 #pragma once
 #include "./Effect.h"
-#include "../utils/random/RNG.h"
+#include "../utils/RNG.h"
 #include <vector>
 #include <memory>
 

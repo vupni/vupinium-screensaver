@@ -3,6 +3,7 @@
 
 # build output
 builds/
+build/
 
 # IDEs
 .vscode/

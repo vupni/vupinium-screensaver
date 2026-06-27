@@ -1,13 +1,14 @@
 #include "./DVDScreensaver.h"
 #include <cstdlib>
 #include <cmath>
+#include "../../utils/AssetsLoader.h"
 
 void DVDScreensaver::init(const RNG& externalRng) {
     rng = externalRng;
     float angle = rng.floatRange(0.0f, 2 * PI);
     float deg = angle * (180.0f / PI);
-    bool isAngleNotSteep = fmodf(deg, 90.0f + 10) < 20.0f;
-    if (isAngleNotSteep) {
+    bool isAngleNotSteep = fmodf(deg, 90.0f) < 20.0f;
+    while (fmodf(deg, 90.0f) < 20.0f || fmodf(deg, 90.0f) > 70.0f) {
         deg += 20.0f;
     }
     if (deg >= 360.0f) deg = fmodf(deg, 360.0f);
@@ -19,7 +20,7 @@ void DVDScreensaver::init(const RNG& externalRng) {
     scale = 0.18f;
     shouldDrawLogo = rng.intRange(0, 3);
 
-    logo = LoadTexture("assets/dvd-logo.png");
+    logo = AssetsLoader::LoadTexture("pngs/dvd-logo.png");
 
     logoWidth = shouldDrawLogo ? (int)(logo.width * scale) : 150;
     logoHeight = shouldDrawLogo ? (int)(logo.height * scale) : 80;
@@ -46,12 +47,7 @@ void DVDScreensaver::update(float deltaTime) {
     }
 
     if (bounced) {
-        color = {
-            (unsigned char)(rng.intRange(0, 255)),
-            (unsigned char)(rng.intRange(0, 255)),
-            (unsigned char)(rng.intRange(0, 255)),
-            255
-        };
+        color = rng.randomColor();
     }
 }
 

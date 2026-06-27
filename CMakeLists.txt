@@ -15,12 +15,32 @@ FetchContent_Declare(
     GIT_TAG 5.5
 )
 
-FetchContent_MakeAvailable(raylib)
+FetchContent_Declare(
+    cmrc
+    GIT_REPOSITORY https://github.com/vector-of-bool/cmrc.git
+    GIT_TAG master
+)
+
+FetchContent_MakeAvailable(raylib cmrc)
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
-    src/*.cpp
+    "${CMAKE_SOURCE_DIR}/src/*.cpp"
 )
 
 add_executable(screensaver ${SOURCES})
 
-target_link_libraries(screensaver raylib)
+target_link_libraries(screensaver PRIVATE raylib)
+
+file(GLOB_RECURSE ASSET_FILES CONFIGURE_DEPENDS LIST_DIRECTORIES false
+    "${CMAKE_SOURCE_DIR}/assets/*"
+)
+
+cmrc_add_resource_library(
+    screensaver_assets
+    ALIAS screensaver::assets
+    NAMESPACE screensaver_assets
+    WHENCE ${CMAKE_SOURCE_DIR}/assets
+    ${ASSET_FILES}
+)
+
+target_link_libraries(screensaver PRIVATE screensaver::assets)

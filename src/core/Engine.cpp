@@ -1,11 +1,13 @@
 #include "./Engine.h"
 #include "raylib.h"
 #include "../screensavers/DVD/DVDScreensaver.h"
+#include "../screensavers/MatrixRain/MatrixRainScreensaver.h"
 #include <raymath.h>
 
 Engine::Engine() {
     rng = RNG();
     allEffects.push_back(std::make_shared<DVDScreensaver>());
+    allEffects.push_back(std::make_shared<MatrixRainScreensaver>());
     int randomEffectIndex = rng.intRange(0, allEffects.size() - 1);
     setEffect(allEffects[randomEffectIndex]);
 }
