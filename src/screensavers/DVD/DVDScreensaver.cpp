@@ -47,12 +47,7 @@ void DVDScreensaver::update(float deltaTime) {
     }
 
     if (bounced) {
-        color = {
-            (unsigned char)(rng.intRange(0, 255)),
-            (unsigned char)(rng.intRange(0, 255)),
-            (unsigned char)(rng.intRange(0, 255)),
-            255
-        };
+        color = rng.randomColor();
     }
 }
 
