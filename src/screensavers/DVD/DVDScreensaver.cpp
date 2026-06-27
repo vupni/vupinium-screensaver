@@ -1,6 +1,7 @@
 #include "./DVDScreensaver.h"
 #include <cstdlib>
 #include <cmath>
+#include "../../utils/AssetsLoader.h"
 
 void DVDScreensaver::init(const RNG& externalRng) {
     rng = externalRng;
@@ -19,7 +20,7 @@ void DVDScreensaver::init(const RNG& externalRng) {
     scale = 0.18f;
     shouldDrawLogo = rng.intRange(0, 3);
 
-    logo = LoadTexture("assets/dvd-logo.png");
+    logo = AssetsLoader::LoadTexture("pngs/dvd-logo.png");
 
     logoWidth = shouldDrawLogo ? (int)(logo.width * scale) : 150;
     logoHeight = shouldDrawLogo ? (int)(logo.height * scale) : 80;
